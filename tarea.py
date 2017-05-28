@@ -3,6 +3,7 @@ import os
 import numpy as np
 
 imagen = Image.open("wonder.jpg")
+imagen.show()
 arr = imagen.load()
 
 #sacando size original de la imagen
@@ -19,7 +20,7 @@ newSize = (new_A, new_L)
 
 #nuevaImagen = Image.new("RGB", newSize, None)
 
-allpix = []
+allpix = [] 
 
 for x in range(orig_A - 1):
     for y in range(orig_L - 1):
