@@ -36,40 +36,6 @@ def getDirection():
     return direcciones, 401
 
 
-@flThing.route('/ejercicio2', methods = ['POST'])
-def getRestaurants():
-    gmaps = googlemaps.Client(key='AIzaSyAAbZMe1pZtcETxTFcFIzXWykHRAY3xHOY')
-    
-    try:
-        origin = request.json['origen']
-    except:
-        err={"Error":"Origen no escrito"}
-        return jsonify(err), 400
-
-    geo_res = gmaps.geocode(origin)
-    resu = gmaps.places_nearby( ( geo_res[0]['geometry']['location']['lat'], geo_res[0]['geometry']['location']['lng'] ) , 30000, type = 'restaurant', keyword = 'restaurant')
-    
-    restaurantes = "{\n \"restaurantes\":[\n"
-
-    for index in range(len(resu['results'])):
-        restaurantes += "  {\n   \"nombre\": \""
-        restaurantes += str(resu['results'][index]['name'])
-        restaurantes += "\",\n"
-        restaurantes += "   \"lat\": "
-        restaurantes += str(resu['results'][index]['geometry']['location']['lat'])
-        restaurantes += ",\n"
-        restaurantes += "   \"lon\": "
-        restaurantes += str(resu['results'][index]['geometry']['location']['lng'])
-        
-        if index == len(resu['results'])-1:
-            restaurantes += "\n  }\n"
-        else:
-            restaurantes += "\n  },\n"
-        
-    restaurantes += " ]\n}"
-
-    return restaurantes, 401
-
 
 if __name__ == '__main__':
     flThing.run(port = 8686, debug = True)
