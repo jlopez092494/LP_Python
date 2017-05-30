@@ -13,23 +13,27 @@ orig_A, orig_L = imagen.size
 rFac = orig_A / (orig_A / 2)
 
 #nuevos valor de width y height
-new_A, new_L = int(orig_A * rFac), int(orig_L * rFac) 
+new_A, new_L = 250, 400 
 
 #tuple de valores del size para enviar a funcion Image.new
 newSize = (new_A, new_L) 
 
-#nuevaImagen = Image.new("RGB", newSize, None)
-
 allpix = [] 
 
-for x in range(orig_A - 1):
-    for y in range(orig_L - 1):
+for x in range(orig_A):
+    for y in range(orig_L):
         tempixel = arr[x, y]
-        allpix.append(tempixel)
+        bw_arr = int(round(sum(tempixel)) / float(len(tempixel)))
+        allpix.append(bw_arr)
 
-arreglo = np.array(allpix)
+#arreglo = np.array(allpix)
+#print(arreglo)
 
-print(arreglo)
+buff = ''.join(map(str, allpix))
+nuevaImagen = Image.frombytes("RGB",newSize,buff,'raw')
+#nuevaImagen = Image.frombytes("RGB",newSize,buffe,"raw")
+nuevaImagen.save("nueva.bmp")
+nuevaImagen.show()
 
 #print("ARREGLO DE PIXELS:",allpix)
 
